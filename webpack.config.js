@@ -4,17 +4,25 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
     mode: 'development',
+    context: path.resolve('src'),
+
     entry: {
-        app: './src/app/index.js'
+        app: './app/index.js'
     },
+
     devtool: 'inline-source-map',
     devServer: {
-        contentBase: './dist',
+      contentBase: path.join(__dirname, 'dist'),
+      compress: false,
+      port: 9000
     },
+
     plugins: [
         new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
         new HtmlWebpackPlugin({
             title: 'Development',
+            template: 'index.html',
+            inject: true
         }),
     ],
     output: {

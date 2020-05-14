@@ -16,8 +16,7 @@ const MAP = new Array(MAP_SIZE.height);
 
 let pos = new Vector()
 
-function init() {
-  const canvas = createBoard(WIDTH, HEIGHT)
+async function init(canvas) {
   const context = canvas.getContext('2d')
 
   initMap();
@@ -86,12 +85,4 @@ function draw(ctx) {
   ctx.stroke()
 }
 
-function createBoard(width, height) {
-  const canvas = document.createElement('canvas')
-  canvas.width = width
-  canvas.height = height
-  document.body.appendChild(canvas)
-  return canvas
-}
-
-document.addEventListener('DOMContentLoaded', init)
+document.addEventListener('DOMContentLoaded', () => init(document.getElementById('canvas')))
