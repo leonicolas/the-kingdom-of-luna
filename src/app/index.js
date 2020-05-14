@@ -3,6 +3,7 @@ import Keyboard from './Keyboard'
 import { Keys } from './Keyboard'
 import Vector from './Vector2'
 import Size from './Size2'
+import { loadImage } from './loaders'
 
 const WIDTH = 640
 const HEIGHT = 480
@@ -12,18 +13,20 @@ const VIEW_PORT_SIZE = new Size(WIDTH / TILE_SIZE, HEIGHT / TILE_SIZE)
 
 const MAP_SIZE = new Size(VIEW_PORT_SIZE.width  * 3,
                           VIEW_PORT_SIZE.height * 3)
-const MAP = new Array(MAP_SIZE.height);
+const MAP = new Array(MAP_SIZE.height)
 
-let pos = new Vector()
+let pos = new Vector(-2, -2)
 
 async function init(canvas) {
   const context = canvas.getContext('2d')
 
-  initMap();
+  initMap()
   initInput()
 
+  const tileSet = await loadImage('tile-set.png')
+
   const timer = new Timer()
-  timer.update = main(context)
+  timer.update = main(context, tileSet)
   timer.start()
 }
 
@@ -49,10 +52,10 @@ function initInput() {
   keyboard.startListeningTo(window)
 }
 
-function main(context) {
+function main(context, tileSet) {
   return (deltaTime) => {
     update(deltaTime)
-    draw(context)
+    draw(context, tileSet)
   }
 }
 
@@ -60,18 +63,18 @@ function update() {
 
 }
 
-function draw(ctx) {
-  for(let col = 0; col < VIEW_PORT_SIZE.width; col++) {
-    for(let lin = 0; lin < VIEW_PORT_SIZE.height; lin++) {
-      const mapCol = col + pos.x
-      const mapLin = lin + pos.y
-      if(mapCol < 0 || mapCol > MAP_SIZE.width - 1 ||
-         mapLin < 0 || mapLin > MAP_SIZE.height - 1) {
-        ctx.fillStyle = 'black'
+function draw(ctx, tileSet) {
+  for(let x = 0; x < VIEW_PORT_SIZE.width; x++) {
+    for(let y = 0; y < VIEW_PORT_SIZE.height; y++) {
+      const mapX = x + pos.x
+      const mapY = y + pos.y
+      if(mapX < 0 || mapX > MAP_SIZE.width - 1 ||
+         mapY < 0 || mapY > MAP_SIZE.height - 1) {
+        ctx.drawImage(tileSet, x * TILE_SIZE, y * TILE_SIZE);
       } else {
-        ctx.fillStyle = MAP[mapLin][mapCol] || 'black'
+        ctx.fillStyle = MAP[mapY][mapX] || 'black'
+        ctx.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
       }
-      ctx.fillRect(col * TILE_SIZE, lin * TILE_SIZE, TILE_SIZE, TILE_SIZE)
     }
   }
 
