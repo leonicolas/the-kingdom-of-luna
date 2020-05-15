@@ -1,9 +1,11 @@
 import Timer from './Timer'
+import TileSet from './TileSet'
 import Keyboard from './Keyboard'
 import { Keys } from './Keyboard'
 import Vector from './Vector2'
 import Size from './Size2'
-import { loadImage } from './loaders'
+import { loadImage } from './lib/loaders'
+import Vector2 from './Vector2'
 
 const WIDTH = 640
 const HEIGHT = 480
@@ -23,7 +25,7 @@ async function init(canvas) {
   initMap()
   initInput()
 
-  const tileSet = await loadImage('tile-set.png')
+  const tileSet = new TileSet(await loadImage('tile-set.png'))
 
   const timer = new Timer()
   timer.update = main(context, tileSet)
@@ -70,7 +72,7 @@ function draw(ctx, tileSet) {
       const mapY = y + pos.y
       if(mapX < 0 || mapX > MAP_SIZE.width - 1 ||
          mapY < 0 || mapY > MAP_SIZE.height - 1) {
-        ctx.drawImage(tileSet, x * TILE_SIZE, y * TILE_SIZE);
+        tileSet.draw(ctx, new Vector2(x * TILE_SIZE, y * TILE_SIZE), 0);
       } else {
         ctx.fillStyle = MAP[mapY][mapX] || 'black'
         ctx.fillRect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
