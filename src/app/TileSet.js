@@ -1,14 +1,12 @@
-import { calcTileX, calcTileY } from './lib/math'
-
 export default class TileSet {
-  constructor(tileSetImage, tileSize = 32) {
+  constructor(tileSetImage, tileSize = 16) {
     this.tileSet = tileSetImage
     this.tileSize = tileSize
   }
 
   draw(context, position, tileNumber) {
-    const tileX = calcTileX(tileNumber, this.tileSize, this.tileSet.width)
-    const tileY = calcTileY(tileNumber, this.tileSize, this.tileSet.width)
+    const tileX = tileNumber.x * this.tileSize
+    const tileY = tileNumber.y * this.tileSize
     context.drawImage(this.tileSet,
       tileX, tileY, this.tileSize, this.tileSize,           // Source
       position.x, position.y, this.tileSize, this.tileSize) // Destination
