@@ -1,17 +1,16 @@
 export default class Timer {
-  constructor(deltaTime = 1 / 60) {
+  constructor(frameRate = 60) {
     let lastTime = 0;
-    let accumulatedTime = 0;
+    let deltaTime = 1000 / frameRate;
 
     this.updateProxy = time => {
-      accumulatedTime += (time - lastTime) / 1000;
-
-      while (accumulatedTime > deltaTime) {
-        if (this.update)
-          this.update(deltaTime)
-        accumulatedTime -= deltaTime;
+      const elapsed = time - lastTime;
+      if(elapsed > deltaTime) {
+        lastTime = time;
+        this.update(elapsed / 1000);
       }
-      lastTime = time;
+
+      // Request next frame.
       if(!this.paused) {
         this.enqueue();
       }
