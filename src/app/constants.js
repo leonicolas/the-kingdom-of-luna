@@ -1,5 +1,5 @@
-import Position from './Position';
-import Size from './Size';
+import Vector from './graphic/Vector';
+import Size from './graphic/Size';
 
 const WIDTH = 640;
 const HEIGHT = 480;
@@ -10,7 +10,7 @@ const VIEW_PORT_SIZE = new Size(
   (WIDTH / TILE_SIZE / SCALE) | 0,
   (HEIGHT / TILE_SIZE / SCALE) | 0
 );
-const VIEW_PORT_CENTER = new Position(
+const VIEW_PORT_CENTER = new Vector(
   (VIEW_PORT_SIZE.width / 2) | 0,
   (VIEW_PORT_SIZE.height / 2) | 0,
 );

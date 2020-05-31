@@ -1,0 +1,10 @@
+{
+  "image": "/assets/images/tile-set.png",
+  "size": 16,
+  "tiles": {
+    "sea-1": [0, 0],
+    "sea-2": [1, 0],
+    "grass-1": [2, 0],
+    "grass-3": [3, 0]
+  }
+}
