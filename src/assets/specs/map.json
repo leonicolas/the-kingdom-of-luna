@@ -1,0 +1,16 @@
+{
+  "luna": {
+    "width": 30,
+    "height": 20,
+    "tiles": [
+
+    ],
+    "animations": {
+      "sea": {
+        "tiles": ["sea-1", "sea-2"],
+        "interval": 1000
+      }
+    },
+    "defaultTile" : "sea-1"
+  }
+}
