@@ -3,7 +3,7 @@
     "width": 30,
     "height": 20,
     "tiles": [
-
+      ["sea"], "grass-1", "grass-2"
     ],
     "animations": {
       "sea": {
@@ -11,6 +11,6 @@
         "interval": 1000
       }
     },
-    "defaultTile" : "sea-1"
+    "defaultTile" : "sea"
   }
 }

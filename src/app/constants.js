@@ -4,7 +4,7 @@ import Size from './graphic/Size';
 const WIDTH = 640;
 const HEIGHT = 480;
 const TILE_SIZE = 16;
-const SCALE = 1.5;
+const SCALE = 1;
 
 const VIEW_PORT_SIZE = new Size(
   (WIDTH / TILE_SIZE / SCALE) | 0,

@@ -20,11 +20,11 @@ async function init(canvas) {
   ]);
 
   const tileSet = new TileSet(tileSetImage, tileSetSpec);
-  const map = new GameMap(mapSpec, tileSet);
+  const lunaMap = new GameMap(mapSpec, tileSet, 'luna');
   const gameContext = {
     state: { pos: new Vector(9, 6) },
     tileSet,
-    map,
+    lunaMap,
   };
 
   bindKeyboard(gameContext);
@@ -36,7 +36,8 @@ async function init(canvas) {
 
 function update(context, gameContext) {
   return deltaTime => {
-    gameContext.map.draw(context, 'luna');
+    gameContext.lunaMap.update(deltaTime);
+    gameContext.lunaMap.draw(context);
   };
 }
 
