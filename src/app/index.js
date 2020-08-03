@@ -9,6 +9,7 @@ import { bindKeyboard } from './keyboard';
 import { loadImage, loadSpec } from './lib/loaders';
 import Size from './graphic/Size';
 import Camera from './graphic/Camera';
+import Compositor from './graphic/Compositor';
 
 async function init(canvas) {
   const context = canvas.getContext('2d');
@@ -22,20 +23,20 @@ async function init(canvas) {
   ]);
 
   const tileSet = new TileSet(tileSetImage, tileSetSpec);
-  const lunaMap = new GameMap(mapSpec['luna'], tileSet);
   const camera = new Camera(constants.VIEW_PORT_SIZE);
 
+  const compositor = new Compositor();
+  compositor.addLayer(new GameMap(mapSpec['luna'], tileSet));
+
   const gameContext = {
-    tileSet,
-    lunaMap,
   };
 
   bindKeyboard(camera.position);
 
   const timer = new Timer();
   timer.update = deltaTime => {
-    gameContext.lunaMap.update(deltaTime);
-    gameContext.lunaMap.draw(context, camera);
+    compositor.update(deltaTime, gameContext);
+    compositor.draw(context, camera);
   }
   timer.start();
 }
