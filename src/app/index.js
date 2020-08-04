@@ -10,6 +10,7 @@ import { loadImage, loadSpec } from './lib/loaders';
 import Size from './graphic/Size';
 import Camera from './graphic/Camera';
 import Compositor from './graphic/Compositor';
+import Player from './entities/Player';
 
 async function init(canvas) {
   const context = canvas.getContext('2d');
@@ -27,6 +28,7 @@ async function init(canvas) {
 
   const compositor = new Compositor();
   compositor.addLayer(new GameMap(mapSpec['luna'], tileSet));
+  compositor.addLayer(new Player(tileSet.get('player-idle-1')));
 
   const gameContext = {
   };
