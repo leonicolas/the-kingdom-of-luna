@@ -9,10 +9,10 @@ export default class Compositor {
   }
 
   update(detaTime, gameContext) {
-    this.layers.forEach(layer => layer.update(detaTime, gameContext));
+    this.layers.forEach(layer => layer.update && layer.update(detaTime, gameContext));
   }
 
   draw(context, camera) {
-    this.layers.forEach(layer => layer.draw(context, camera));
+    this.layers.forEach(layer => layer.draw && layer.draw(context, camera));
   }
 }
