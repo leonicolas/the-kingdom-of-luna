@@ -1,2 +1,5 @@
+# NodeJS files
 node_modules
-package-lock.json
+
+# IDE and editor files
+.vscode
