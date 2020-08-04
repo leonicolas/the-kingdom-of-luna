@@ -40,7 +40,7 @@ export default class GameMap {
         const currentTile = this.animations[tileName]
           ? this.animations[tileName]
           : this.tileSet.get(tileName);
-        const position = new Vector(x * this.tileSet.tileSize, y * this.tileSet.tileSize);
+        const position = new Vector(x, y);
         currentTile.draw(context, position);
       }
     }
