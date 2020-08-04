@@ -6,7 +6,7 @@ The Kingdom of Luna is a turn based 8 bit style RPG entire written in pure Javas
 
 The game is in the first stages of development... and currently there are not a lot to show you :(
 
-You can play around a very simple world using the keyboard arrow keys, mobile is not supported yet.
+You can play around in a very simple world using the keyboard arrow keys, mobile is not supported yet.
 
 This is the first glimpse of the game:
 
