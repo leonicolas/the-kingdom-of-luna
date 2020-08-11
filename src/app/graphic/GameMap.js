@@ -7,7 +7,6 @@ export default class GameMap {
     this.tileSet = tileSet;
     this.mapSpec = this._expand(mapSpec);
     this.animations = loadAnimations(tileSet, this.mapSpec.animations);
-    console.log(this.mapSpec);
   }
 
   update(deltaTime) {

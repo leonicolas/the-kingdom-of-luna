@@ -1,26 +1,26 @@
-import { castArray } from './lib/utils';
+import Vector from './Vector';
+import Animation from './Animation';
+import constants from '../constants';
 
 export default class Sprite {
-  constructor(tileSet, tiles = [0], frameTimeInSec = 1) {
-    this.tileSet = tileSet;
-    this.tiles = castArray(tiles);
-    this.frameTime = frameTimeInSec;
-    this.internalTime = 0;
-    this.frame = 0;
+  constructor(spriteSpec, tileSet) {
+    this.animation = new Animation(spriteSpec, tileSet);
+    this.flip = false;
+  }
+
+  flipLeft() {
+    this.flip = true;
+  }
+
+  flipRight() {
+    this.flip = false;
   }
 
   update(deltaTime) {
-    this.internalTime += deltaTime;
-    if(this.internalTime > this.frameTime)   {
-      this.internalTime = 0;
-      this.frame = ++this.frame % this.tiles.length;
-    }
+    this.animation.update(deltaTime);
   }
 
   draw(context, position) {
-    this.tileSet.draw(
-      context,
-      position,
-      this.tiles[this.frame]);
+    this.animation.draw(context, position, this.flip);
   }
 }

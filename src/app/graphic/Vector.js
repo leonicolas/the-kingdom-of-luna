@@ -4,6 +4,23 @@ export default class Vector {
     this.y = y;
   }
 
+  clone() {
+    return new Vector(this.x, this.y);
+  }
+
+  translateX(value) {
+    this.x += value;
+  }
+
+  translateY(value) {
+    this.y += value;
+  }
+
+  translate(offset) {
+    this.translateX(offset.x);
+    this.translateY(offset.y);
+  }
+
   equals(position) {
     return position &&
       position.x === this.x &&

@@ -1,39 +1,44 @@
 import constants from './constants';
 import Timer from './lib/Timer';
 
-import Vector from './graphic/Vector';
 import TileSet from './graphic/TileSet';
 import GameMap from './graphic/GameMap';
 
 import { bindKeyboard } from './keyboard';
 import { loadImage, loadSpec } from './lib/loaders';
-import Size from './graphic/Size';
 import Camera from './graphic/Camera';
 import Compositor from './graphic/Compositor';
-import Player from './entities/Player';
+import Entity from './entities/Entity';
+import Keyboard from './lib/Keyboard';
 
 async function init(canvas) {
   const context = canvas.getContext('2d');
   context.fillRect(0, 0, canvas.width, canvas.height);
   context.scale(constants.SCALE, constants.SCALE);
 
-  const [tileSetImage, tileSetSpec, mapSpec] = await Promise.all([
+  const [tileSetImage, tileSetSpec, mapSpec, playerSpec] = await Promise.all([
     loadImage('tile-set.png'),
     loadSpec('tile-set.json'),
-    loadSpec('map.json')
+    loadSpec('map.json'),
+    loadSpec('player.json'),
   ]);
 
-  const tileSet = new TileSet(tileSetImage, tileSetSpec);
+  const keyboard = new Keyboard();
+  const tileSet = new TileSet(tileSetSpec, tileSetImage);
   const camera = new Camera(constants.VIEW_PORT_SIZE);
+  const player = new Entity(playerSpec, tileSet, constants.VIEW_PORT_CENTER);
 
   const compositor = new Compositor();
   compositor.addLayer(new GameMap(mapSpec['luna'], tileSet));
-  compositor.addLayer(new Player(tileSet.get('player-idle-1')));
+  compositor.addLayer(player);
 
   const gameContext = {
+    player
   };
 
-  bindKeyboard(camera.position);
+  bindKeyboard(keyboard, player);
+  bindKeyboard(keyboard, camera.position);
+  keyboard.startListeningTo(window);
 
   const timer = new Timer();
   timer.update = deltaTime => {

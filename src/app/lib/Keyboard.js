@@ -13,11 +13,14 @@ export default class Keyboard {
 
   constructor() {
     this.keyStates = new Map();
-    this.keyListeners = new Map();
+    this.listeners = new Map();
   }
 
   addKeyListener(keyCode, callback) {
-    this.keyListeners.set(keyCode, callback);
+    if(!this.listeners.has(keyCode)) {
+      this.listeners.set(keyCode, new Set());
+    }
+    this.listeners.get(keyCode).add(callback);
   }
 
   startListeningTo(eventSource) {
@@ -28,7 +31,7 @@ export default class Keyboard {
   }
 
   resetListeners() {
-    this.keyListeners.clear();
+    this.listeners.clear();
     this.keyStates.clear();
   }
 
@@ -40,7 +43,7 @@ export default class Keyboard {
     const keyCode = event.code;
 
     // Checks if there is a listener for the pressed key
-    if(!this.keyListeners.has(keyCode)) return;
+    if(!this.listeners.has(keyCode)) return;
 
     // Prevent the default browser behavior
     event.preventDefault();
@@ -51,6 +54,6 @@ export default class Keyboard {
 
     // Save the current key state and trigger the listener callback
     this.keyStates.set(keyCode, keyState);
-    this.keyListeners.get(keyCode)(keyState, this);
+    this.listeners.get(keyCode).forEach(callback => callback(keyState, this));
   }
 }
