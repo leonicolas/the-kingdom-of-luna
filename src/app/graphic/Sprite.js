@@ -1,6 +1,4 @@
-import Vector from './Vector';
 import Animation from './Animation';
-import constants from '../constants';
 
 export default class Sprite {
   constructor(spriteSpec, tileSet) {
