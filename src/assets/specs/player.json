@@ -2,7 +2,7 @@
   "states": {
     "idle": {
       "tiles": ["player-idle-1", "player-idle-2"],
-      "interval": 1000
+      "interval": 2000
     }
   }
 }
