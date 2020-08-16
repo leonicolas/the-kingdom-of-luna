@@ -23,8 +23,8 @@ export default class TileSet {
       buffer.height = this.tileSize;
 
       const tilePosition = this.tileSetSpec.tiles[tileName];
-      const tileY = tilePosition[0] * this.tileSize;
-      const tileX = tilePosition[1] * this.tileSize;
+      const tileX = tilePosition[0] * this.tileSize;
+      const tileY = tilePosition[1] * this.tileSize;
       const context = buffer.getContext('2d');
 
       if(flip) {

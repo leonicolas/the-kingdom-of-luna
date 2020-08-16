@@ -14,8 +14,10 @@ export async function loadSpec(specFile) {
 }
 
 export function loadAnimations(tileSet, animationsSpec) {
-  return Object.entries(animationsSpec).reduce((map, [animName, animSpec]) => {
-    map[animName] = new Animation(animSpec, tileSet);
-    return map;
-  }, {});
+  return Object
+    .entries(animationsSpec)
+    .reduce((map, [animName, animSpec]) => {
+      map.set(animName, new Animation(animSpec, tileSet));
+      return map;
+    }, new Map());
 }

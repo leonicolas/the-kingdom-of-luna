@@ -1,3 +1,3 @@
-export function calcIndex(x, y, lineSize) {
+export function getIndexFromXY(x, y, lineSize) {
   return (x % lineSize) + (y * lineSize);
 }
