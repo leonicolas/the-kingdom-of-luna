@@ -96,7 +96,7 @@ export default class GameMap {
     }, new Map());
   }
 
-  _expandTerrain(mapSpec, tileSet) {
+  _expandTerrain(mapSpec) {
     return mapSpec.terrain.reduce((expandedTerrain, tile) => {
       const isPattern = Array.isArray(tile);
       const tileName = isPattern ? tile[0] : tile;
