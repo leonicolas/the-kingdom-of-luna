@@ -1,5 +1,5 @@
 import Vector from './Vector';
-import { getIndexFromXY } from '../lib/math';
+import { getIndexFromPosition } from '../lib/math';
 import { loadAnimations } from '../lib/loaders';
 
 export default class GameMap {
@@ -10,7 +10,8 @@ export default class GameMap {
 
     this.animations = loadAnimations(tileSet, mapSpec.animations);
     this.terrain = this._expandTerrain(mapSpec, tileSet);
-    this.objects = this._indexObjects(mapSpec, tileSet);
+    this.foregroundObjects = this._indexObjects(mapSpec.foregroundObjects, tileSet);
+    this.backgroundObjects = this._indexObjects(mapSpec.backgroundObjects, tileSet);
 
     this.defaultTerrainTile =
       this.animations.get(mapSpec.defaultTerrainTile) ||
@@ -23,22 +24,60 @@ export default class GameMap {
     });
   }
 
-  draw(context, camera) {
+  background() {
+    return {
+      draw: (context, camera) => this._drawBackground(context, camera)
+    };
+  }
+
+  foreground() {
+    return {
+      draw: (context, camera) => this._drawForeground(context, camera)
+    };
+  }
+
+  _drawForeground(context, camera) {
+    this._drawObjects(context, camera, (mapPosition) => {
+      const fgTiles = []
+
+      // Add foreground object tile.
+      const objectKey = this._getObjectIndex(mapPosition);
+      if(this.foregroundObjects.has(objectKey)) {
+        fgTiles.push(this.foregroundObjects.get(objectKey));
+      }
+
+      return fgTiles;
+    });
+  }
+
+  _drawBackground(context, camera) {
+    this._drawObjects(context, camera, (mapPosition, tileIndex) => {
+        const bgTiles = [];
+
+        // Add terrain tile.
+        bgTiles.push(this._isOutOfBounds(mapPosition.x, mapPosition.y)
+          ? this.defaultTerrainTile
+          : this.terrain[tileIndex] || this.defaultTerrainTile
+        );
+
+        // Add background object tile.
+        const objectKey = this._getObjectIndex(mapPosition);
+        if(this.backgroundObjects.has(objectKey)) {
+          bgTiles.push(this.backgroundObjects.get(objectKey));
+        }
+
+        return bgTiles;
+    });
+  }
+
+  _drawObjects(context, camera, drawCallback) {
     for(let y = 0; y < camera.viewport.height; y++) {
       for(let x = 0; x < camera.viewport.width; x++) {
-        const mapX = x + camera.position.x;
-        const mapY = y + camera.position.y;
-        const index = getIndexFromXY(mapX, mapY, this.width);
-
-        const currentTile = this._isOutOfBounds(mapX, mapY)
-          ? this.defaultTerrainTile
-          : this.terrain[index] || this.defaultTerrainTile;
-        currentTile.draw(context, new Vector(x, y));
-
-        const objectKey = this._getObjectIndex(mapX, mapY);
-        if(this.objects.has(objectKey)) {
-          this.objects.get(objectKey).draw(context, new Vector(x, y));
-        }
+        const cameraPosition = new Vector(x, y);
+        const mapPosition = new Vector(x + camera.position.x, y + camera.position.y);
+        const tileIndex = getIndexFromPosition(mapPosition, this.width);
+        drawCallback(mapPosition, tileIndex)
+          .forEach(tile => tile.draw(context, cameraPosition));
       }
     }
   }
@@ -47,10 +86,10 @@ export default class GameMap {
     return x < 0 || y < 0 || x > this.width - 1 || y > this.height - 1;
   }
 
-  _indexObjects(mapSpec, tileSet) {
-    return mapSpec.objects.reduce((map, tileData) => {
-      const tileName = tileData[0];
-      const objIndex = this._getObjectIndex(tileData[1], tileData[2]);
+  _indexObjects(objectsList, tileSet) {
+    return objectsList.reduce((map, tileData) => {
+      const [tileName, x, y] = tileData;
+      const objIndex = this._getObjectIndex(new Vector(x, y));
       map.set(objIndex, tileSet.get(tileName));
       return map;
     }, new Map());
@@ -72,7 +111,7 @@ export default class GameMap {
     }, []);
   }
 
-  _getObjectIndex(x, y) {
-    return `${x}-${y}`;
+  _getObjectIndex(position) {
+    return `${position.x}-${position.y}`;
   }
 }

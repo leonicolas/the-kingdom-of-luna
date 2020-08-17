@@ -29,8 +29,10 @@ async function init(canvas) {
   const player = new Entity(playerSpec, tileSet, constants.VIEW_PORT_CENTER);
 
   const compositor = new Compositor();
-  compositor.addLayer(new GameMap(mapSpec['luna'], tileSet));
+  const gameMap = new GameMap(mapSpec['luna'], tileSet);
+  compositor.addLayer(gameMap.background());
   compositor.addLayer(player);
+  compositor.addLayer(gameMap.foreground());
 
   const gameContext = {
     player

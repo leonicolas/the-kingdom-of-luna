@@ -1,3 +1,3 @@
-export function getIndexFromXY(x, y, lineSize) {
-  return (x % lineSize) + (y * lineSize);
+export function getIndexFromPosition(position, horizontalTilesNumber) {
+  return (position.x % horizontalTilesNumber) + (position.y * horizontalTilesNumber);
 }
