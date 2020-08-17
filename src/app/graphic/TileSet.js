@@ -1,5 +1,3 @@
-import Vector from "./Vector";
-
 export default class TileSet {
   constructor(tileSetSpec, tileSetImage) {
     this.tileSetSpec = tileSetSpec;

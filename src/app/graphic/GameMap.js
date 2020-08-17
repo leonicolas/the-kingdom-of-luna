@@ -1,5 +1,4 @@
-import Vector from './Vector';
-import { getIndexFromPosition } from '../lib/math';
+import { getIndexFromPosition, Vector } from '../lib/math';
 import { loadAnimations } from '../lib/loaders';
 
 export default class GameMap {

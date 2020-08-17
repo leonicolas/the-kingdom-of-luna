@@ -1,4 +1,4 @@
-import Vector from "./Vector";
+import { Vector } from "../lib/math";
 
 export default class Camera {
 

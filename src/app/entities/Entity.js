@@ -1,4 +1,4 @@
-import Vector from "../graphic/Vector";
+import { Vector } from "../lib/math";
 import Sprite from "../graphic/Sprite";
 
 const LEFT = -1;
