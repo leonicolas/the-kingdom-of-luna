@@ -35,6 +35,27 @@ export class Rect {
   }
 }
 
+export class Matrix {
+
+  constructor() {
+    this.matrix = [];
+  }
+
+  get(x, y) {
+    const col = this.matrix[x];
+    return col ? col[y] : undefined;
+  }
+
+  put(x, y, value) {
+    if(!this.matrix[x]) {
+      this.matrix[x] = [];
+    }
+    this.matrix[x][y] = value;
+  }
+}
+
+window.Matrix = Matrix;
+
 export function getIndexFromPosition(position, horizontalTilesNumber) {
   return (position.x % horizontalTilesNumber) + (position.y * horizontalTilesNumber);
 }
