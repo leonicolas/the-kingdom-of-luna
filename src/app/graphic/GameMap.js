@@ -18,14 +18,9 @@ export default class GameMap {
       this.tileSet.get(mapSpec.defaultTerrainTile);
   }
 
-  update(deltaTime) {
-    this.animations.forEach(animation => {
-      animation.update(deltaTime);
-    });
-  }
-
   background() {
     return {
+      update: (deltatime) => this._update(deltatime),
       draw: (context, camera) => this._drawBackground(context, camera)
     };
   }
@@ -34,6 +29,12 @@ export default class GameMap {
     return {
       draw: (context, camera) => this._drawForeground(context, camera)
     };
+  }
+
+  _update(deltaTime) {
+    this.animations.forEach(animation => {
+      animation.update(deltaTime);
+    });
   }
 
   _drawForeground(context, camera) {
