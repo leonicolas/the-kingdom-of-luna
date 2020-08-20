@@ -1,4 +1,4 @@
-import { getIndexFromPosition, Vector } from '../lib/math';
+import { Vector, Matrix } from '../lib/math';
 import { loadAnimations } from '../lib/loaders';
 
 export default class GameMap {
@@ -51,13 +51,14 @@ export default class GameMap {
   }
 
   _drawBackground(context, camera) {
-    this._drawObjects(context, camera, (mapPosition, tileIndex) => {
+    this._drawObjects(context, camera, (mapPosition) => {
         const bgTiles = [];
 
         // Add terrain tile.
+        const tile = this.terrain.get(mapPosition.x, mapPosition.y);
         bgTiles.push(this._isOutOfBounds(mapPosition.x, mapPosition.y)
           ? this.defaultTerrainTile
-          : this.terrain[tileIndex] || this.defaultTerrainTile
+          : tile || this.defaultTerrainTile
         );
 
         // Add background object tile.
@@ -73,11 +74,9 @@ export default class GameMap {
   _drawObjects(context, camera, drawCallback) {
     for(let y = 0; y < camera.viewport.height; y++) {
       for(let x = 0; x < camera.viewport.width; x++) {
-        const cameraPosition = new Vector(x, y);
         const mapPosition = new Vector(x + camera.position.x, y + camera.position.y);
-        const tileIndex = getIndexFromPosition(mapPosition, this.width);
-        drawCallback(mapPosition, tileIndex)
-          .forEach(tile => tile.draw(context, cameraPosition));
+        drawCallback(mapPosition)
+          .forEach(tile => tile.draw(context, x, y));
       }
     }
   }
@@ -96,7 +95,8 @@ export default class GameMap {
   }
 
   _expandTerrain(mapSpec) {
-    return mapSpec.terrain.reduce((expandedTerrain, tile) => {
+    let x = 0, y = 0;
+    return mapSpec.terrain.reduce((terrainMatrix, tile) => {
       const isPattern = Array.isArray(tile);
       const tileName = isPattern ? tile[0] : tile;
       const quantity = isPattern ? tile[1] || mapSpec.width : 1;
@@ -105,10 +105,14 @@ export default class GameMap {
         this.tileSet.get(tileName);
 
       for(let i = 0; i < quantity; i++) {
-        expandedTerrain.push(currentTile);
+        terrainMatrix.put(x++, y, currentTile);
+        if(x === this.width) {
+          x = 0;
+          y++;
+        }
       }
-      return expandedTerrain;
-    }, []);
+      return terrainMatrix;
+    }, new Matrix());
   }
 
   _getObjectIndex(position) {

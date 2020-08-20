@@ -1,39 +1,33 @@
 import { Vector } from "../lib/math";
-import Sprite from "../graphic/Sprite";
-
-const LEFT = -1;
-const RIGHT = 1;
+import Animation from "../graphic/Animation";
 
 export default class Entity {
 
   constructor(entitySpec, tileSet, offset = new Vector()) {
     this.states = this._createStates(entitySpec, tileSet);
-    this.state = 'idle';
     this.offset = offset.clone();
     this.position = offset.clone();
-    this.direction = RIGHT;
-    this.sprite = this.states.get(this.state);
+    this.flipped = false;
+    this.setState('idle');
   }
 
   _createStates(entitySpec, tileSet) {
     return Object.keys(entitySpec.states).reduce((map, stateName) => {
-      map.set(stateName, new Sprite(entitySpec.states[stateName], tileSet));
+      const stateAnimation = new Animation(entitySpec.states[stateName], tileSet);
+      map.set(stateName, stateAnimation);
       return map;
     }, new Map());
+  }
+
+  setState(stateName) {
+    this.stateAnimation = this.states.get(stateName);
   }
 
   translateX(value = 0) {
     if(value === 0) {
       return;
     }
-    this.direction = value >= 0 ? RIGHT : LEFT;
-    if(this.direction === RIGHT) {
-      this.sprite.flipRight();
-    }
-    else if(this.direction === LEFT) {
-      this.sprite.flipLeft();
-    }
-
+    this.flipped = value < 0;
     this.position.translateX(value);
   }
 
@@ -44,11 +38,11 @@ export default class Entity {
     this.position.translateY(value);
   }
 
-  update(deltaTime, gameContext) {
-    this.sprite.update(deltaTime);
+  update(deltaTime) {
+    this.stateAnimation.update(deltaTime);
   }
 
   draw(context) {
-    this.sprite.draw(context, this.offset);
+    this.stateAnimation.draw(context, this.offset.x, this.offset.y, this.flipped);
   }
 }

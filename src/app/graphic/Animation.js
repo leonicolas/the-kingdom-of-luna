@@ -15,8 +15,8 @@ export default class Animation {
     }
   }
 
-  draw(context, position, flip) {
+  draw(context, x, y, flip) {
     const tileName = this.animationSpec.tiles[this.index];
-    this.tileSet.get(tileName).draw(context, position, flip);
+    this.tileSet.get(tileName).draw(context, x, y, flip);
   }
 }

@@ -42,13 +42,13 @@ export default class TileSet {
   get(tileName) {
     const tile = this.tileSet.get(tileName);
     return {
-      draw: (context, position, flip = false) => {
+      draw: (context, x, y, flip = false) => {
         context.drawImage(tile[flip ? 1 : 0],
           // Source
           0, 0, this.tileSize, this.tileSize,
           // Destination
-          position.x * this.tileSize,
-          position.y * this.tileSize,
+          x * this.tileSize,
+          y * this.tileSize,
           this.tileSize, this.tileSize
         );
       }
