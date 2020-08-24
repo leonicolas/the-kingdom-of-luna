@@ -1,20 +1,14 @@
 import { Vector, Matrix } from '../lib/math';
-import { loadAnimations } from '../lib/loaders';
 
 export default class GameMap {
   constructor(mapSpec, tileSet) {
     this.tileSet = tileSet;
     this.width = mapSpec.width;
     this.height = mapSpec.height;
-
-    this.animations = loadAnimations(tileSet, mapSpec.animations);
     this.terrain = this._expandTerrain(mapSpec, tileSet);
     this.foregroundObjects = this._indexObjects(mapSpec.foregroundObjects, tileSet);
     this.backgroundObjects = this._indexObjects(mapSpec.backgroundObjects, tileSet);
-
-    this.defaultTerrainTile =
-      this.animations.get(mapSpec.defaultTerrainTile) ||
-      this.tileSet.get(mapSpec.defaultTerrainTile);
+    this.defaultTerrainTile = this.tileSet.get(mapSpec.defaultTerrainTile);
   }
 
   background() {
@@ -30,10 +24,7 @@ export default class GameMap {
     };
   }
 
-  _update(deltaTime) {
-    this.animations.forEach(animation => {
-      animation.update(deltaTime);
-    });
+  _update() {
   }
 
   _drawForeground(context, camera) {
@@ -100,9 +91,7 @@ export default class GameMap {
       const isPattern = Array.isArray(tile);
       const tileName = isPattern ? tile[0] : tile;
       const quantity = isPattern ? tile[1] || mapSpec.width : 1;
-      const currentTile =
-        this.animations.get(tileName) ||
-        this.tileSet.get(tileName);
+      const currentTile = this.tileSet.get(tileName);
 
       for(let i = 0; i < quantity; i++) {
         terrainMatrix.put(x++, y, currentTile);

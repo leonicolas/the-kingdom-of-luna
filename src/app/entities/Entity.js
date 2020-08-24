@@ -1,5 +1,4 @@
 import { Vector } from "../lib/math";
-import Animation from "../graphic/Animation";
 
 export default class Entity {
 
@@ -8,19 +7,19 @@ export default class Entity {
     this.offset = offset.clone();
     this.position = offset.clone();
     this.flipped = false;
-    this.setState('idle');
+    this.setState(this.states.keys().next().value);
   }
 
   _createStates(entitySpec, tileSet) {
-    return Object.keys(entitySpec.states).reduce((map, stateName) => {
-      const stateAnimation = new Animation(entitySpec.states[stateName], tileSet);
-      map.set(stateName, stateAnimation);
-      return map;
-    }, new Map());
+    return entitySpec.states
+      .reduce((map, stateName) => {
+        map.set(stateName, tileSet.get(stateName));
+        return map;
+      }, new Map());
   }
 
   setState(stateName) {
-    this.stateAnimation = this.states.get(stateName);
+    this.currentState = this.states.get(stateName);
   }
 
   translateX(value = 0) {
@@ -38,11 +37,10 @@ export default class Entity {
     this.position.translateY(value);
   }
 
-  update(deltaTime) {
-    this.stateAnimation.update(deltaTime);
+  update() {
   }
 
   draw(context) {
-    this.stateAnimation.draw(context, this.offset.x, this.offset.y, this.flipped);
+    this.currentState.draw(context, this.offset.x, this.offset.y, this.flipped);
   }
 }

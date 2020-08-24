@@ -1,18 +1,22 @@
 export default class Compositor {
 
   constructor() {
-    this.layers = [];
+    this.objects = new Set();
   }
 
   addLayer(layer) {
-    this.layers.push(layer);
+    this.objects.add(layer);
+  }
+
+  addObject(object) {
+    this.objects.add(object);
   }
 
   update(detaTime, gameContext) {
-    this.layers.forEach(layer => layer.update && layer.update(detaTime, gameContext));
+    this.objects.forEach(object => object.update && object.update(detaTime, gameContext));
   }
 
   draw(context, camera) {
-    this.layers.forEach(layer => layer.draw && layer.draw(context, camera));
+    this.objects.forEach(object => object.draw && object.draw(context, camera));
   }
 }

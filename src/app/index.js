@@ -30,8 +30,9 @@ async function init(canvas) {
 
   const compositor = new Compositor();
   const gameMap = new GameMap(mapSpec['luna'], tileSet);
+  compositor.addObject(tileSet);
   compositor.addLayer(gameMap.background());
-  compositor.addLayer(player);
+  compositor.addObject(player);
   compositor.addLayer(gameMap.foreground());
 
   const gameContext = {
