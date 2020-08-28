@@ -11,9 +11,18 @@ export const Keys = {
 
 export default class Keyboard {
 
-  constructor() {
+  constructor(keyMap) {
     this.keyStates = new Map();
     this.listeners = new Map();
+    this.keyMap = keyMap;
+  }
+
+  bind(entity) {
+    this.keyMap.forEach((callback, keyCode) => {
+      this.addKeyListener(keyCode, keyState => {
+        callback(entity, keyState);
+      })
+    });
   }
 
   addKeyListener(keyCode, callback) {

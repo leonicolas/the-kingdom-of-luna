@@ -2,13 +2,12 @@ import { Vector, Matrix } from '../lib/math';
 
 export default class GameMap {
   constructor(mapSpec, tileSet) {
-    this.tileSet = tileSet;
     this.width = mapSpec.width;
     this.height = mapSpec.height;
     this.terrain = this._expandTerrain(mapSpec, tileSet);
     this.foregroundObjects = this._indexObjects(mapSpec.foregroundObjects, tileSet);
     this.backgroundObjects = this._indexObjects(mapSpec.backgroundObjects, tileSet);
-    this.defaultTerrainTile = this.tileSet.get(mapSpec.defaultTerrainTile);
+    this.defaultTerrainTile = tileSet.get(mapSpec.defaultTerrainTile);
   }
 
   background() {
@@ -85,13 +84,13 @@ export default class GameMap {
     }, new Map());
   }
 
-  _expandTerrain(mapSpec) {
+  _expandTerrain(mapSpec, tileSet) {
     let x = 0, y = 0;
     return mapSpec.terrain.reduce((terrainMatrix, tile) => {
       const isPattern = Array.isArray(tile);
       const tileName = isPattern ? tile[0] : tile;
       const quantity = isPattern ? tile[1] || mapSpec.width : 1;
-      const currentTile = this.tileSet.get(tileName);
+      const currentTile = tileSet.get(tileName);
 
       for(let i = 0; i < quantity; i++) {
         terrainMatrix.put(x++, y, currentTile);

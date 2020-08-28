@@ -8,23 +8,23 @@ export class Vector {
     return new Vector(this.x, this.y);
   }
 
-  translateX(value) {
+  addX(value) {
     this.x += value;
   }
 
-  translateY(value) {
+  addY(value) {
     this.y += value;
   }
 
-  translate(offset) {
-    this.translateX(offset.x);
-    this.translateY(offset.y);
+  add(vector) {
+    this.addX(vector.x);
+    this.addY(vector.y);
   }
 
-  equals(position) {
-    return position &&
-      position.x === this.x &&
-      position.y === this.y;
+  equals(vector) {
+    return vector &&
+      vector.x === this.x &&
+      vector.y === this.y;
   }
 }
 

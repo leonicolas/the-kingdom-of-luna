@@ -1,13 +1,14 @@
 import { Vector } from "../lib/math";
+import Movement from "../traits/Movement";
 
 export default class Entity {
 
   constructor(entitySpec, tileSet, offset = new Vector()) {
     this.states = this._createStates(entitySpec, tileSet);
     this.offset = offset.clone();
-    this.position = offset.clone();
-    this.flipped = false;
     this.setState(this.states.keys().next().value);
+    this.traits = new Set();
+    this.traits.add(new Movement(this));
   }
 
   _createStates(entitySpec, tileSet) {
@@ -18,29 +19,19 @@ export default class Entity {
       }, new Map());
   }
 
+  addTrait(trait) {
+    this.traits.add(trait);
+  }
+
   setState(stateName) {
     this.currentState = this.states.get(stateName);
   }
 
-  translateX(value = 0) {
-    if(value === 0) {
-      return;
-    }
-    this.flipped = value < 0;
-    this.position.translateX(value);
-  }
-
-  translateY(value = 0) {
-    if(value === 0) {
-      return;
-    }
-    this.position.translateY(value);
-  }
-
-  update() {
+  update(deltaTime, gameContext) {
+    this.traits.forEach(trait => trait.update && trait.update(deltaTime, gameContext));
   }
 
   draw(context) {
-    this.currentState.draw(context, this.offset.x, this.offset.y, this.flipped);
+    this.currentState.draw(context, this.offset.x, this.offset.y, this.direction < 0);
   }
 }
