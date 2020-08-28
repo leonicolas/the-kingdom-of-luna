@@ -44,7 +44,7 @@ export default class Gamepad {
         });
 
         gamepad.axes.forEach((axisData, index) => {
-          if(!axisData || axisData === -1) return;
+          if((axisData > -0.2 && axisData < 0.2)  || axisData === -1) return;
           console.log(`Axis ${index} pressed. Value: ${axisData}`);
         });
 
