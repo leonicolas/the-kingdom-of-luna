@@ -1,7 +1,7 @@
 
 import constants from './constants';
 
-import Keyboard, { Keys } from './lib/Keyboard';
+import Keyboard, { Keys } from './control/Keyboard';
 import Game from './Game';
 
 async function init(canvas) {
