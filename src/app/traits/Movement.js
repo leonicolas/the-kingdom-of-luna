@@ -1,8 +1,7 @@
 import { Vector } from "../lib/math";
 export default class Movement {
 
-  constructor(entity, initialPosition = new Vector(0, 0)) {
-    entity.position = initialPosition;
+  constructor(entity) {
     entity.direction = 1;
 
     entity.translateX = (value = 0) => {

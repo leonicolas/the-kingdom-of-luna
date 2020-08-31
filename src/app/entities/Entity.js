@@ -1,14 +1,13 @@
 import { Vector } from "../lib/math";
-import Movement from "../traits/Movement";
 
 export default class Entity {
 
   constructor(entitySpec, tileSet, offset = new Vector()) {
+    this.position = new Vector(0, 0);
     this.states = this._createStates(entitySpec, tileSet);
     this.offset = offset.clone();
     this.setState(this.states.keys().next().value);
     this.traits = new Set();
-    this.traits.add(new Movement(this));
   }
 
   _createStates(entitySpec, tileSet) {

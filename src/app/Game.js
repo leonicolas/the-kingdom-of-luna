@@ -5,7 +5,7 @@ import Timer from './lib/Timer';
 import TileSet from './graphic/TileSet';
 import GameMap from './graphic/GameMap';
 import Camera from './graphic/Camera';
-import Entity from './entities/Entity';
+import Player from './entities/Player';
 import Compositor from './graphic/Compositor';
 
 export default class Game {
@@ -27,11 +27,10 @@ export default class Game {
     this.tileSet = new TileSet(tileSetSpec, tileSetImage);
     this.camera = new Camera(constants.VIEW_PORT_SIZE);
 
-    this.context.player = new Entity(playerSpec, this.tileSet, constants.VIEW_PORT_CENTER);
+    this.context.player = new Player(playerSpec, this.tileSet, constants.VIEW_PORT_CENTER);
     this.context.map = new GameMap(mapSpec['luna'], this.tileSet);
 
     this.compositor = new Compositor();
-    this.compositor.addObject(this.tileSet);
     this.compositor.addLayer(this.context.map.background());
     this.compositor.addObject(this.context.player);
     this.compositor.addLayer(this.context.map.foreground());
@@ -43,7 +42,8 @@ export default class Game {
   start() {
     const timer = new Timer();
     timer.update = deltaTime => {
-      this.compositor.update(deltaTime, this.gameContext);
+      this.tileSet.update(deltaTime, this.context);
+      this.compositor.update(deltaTime, this.context);
       this.compositor.draw(this.buffer, this.camera);
     }
     timer.start();
