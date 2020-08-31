@@ -10,4 +10,15 @@ You can play around in a very simple world using the keyboard arrow keys, mobile
 
 This is the first glimpse of the game:
 
-![game screenshot](resources/game-screen.gif)
+![game screenshot](resources/luna-0.01-alpha01.gif)
+
+https://www.youtube.com/watch?v=be9ax1X3o0A
+
+
+## How to run the game
+
+The first step is to clone the repository or download the source code to your computer and install the NodeJS if you hadn't installed in you computer yet.
+
+To install the game dependencies, you should open the computer terminal and run the command ```npm install``` from the game directory.
+
+To run the game you should use the command ```npm start```.
