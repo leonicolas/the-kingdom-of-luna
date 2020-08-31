@@ -6,7 +6,7 @@ The Kingdom of Luna is a turn based 8 bit style RPG entire written in pure Javas
 
 The game is in the first stages of development... and currently there are not a lot to show you :(
 
-You can play around in a very simple world using the keyboard arrow keys, mobile is not supported yet.
+You can play around in a very simple world using the keyboard arrow keys, mobile or gamepads are not supported yet.
 
 This is the first glimpse of the game:
 
@@ -17,8 +17,8 @@ https://www.youtube.com/watch?v=be9ax1X3o0A
 
 ## How to run the game
 
-The first step is to clone the repository or download the source code to your computer and install the NodeJS if you hadn't installed in you computer yet.
+The first step is to clone the repository or download the source code to your computer and install the NodeJS if you haven't already installed it on your computer.
 
-To install the game dependencies, you should open the computer terminal and run the command ```npm install``` from the game directory.
+To install the game dependencies you must open the computer terminal and run the command ```npm install``` from the game directory.
 
-To run the game you should use the command ```npm start```.
+To run the game you must use the command ```npm start```.
