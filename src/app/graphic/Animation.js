@@ -9,7 +9,14 @@ export default class Animation {
   }
 
   _createFrames(animationSpec, tileSet) {
-    return animationSpec.tiles.map(tileName => {
+    let tiles = animationSpec.tiles;
+    if(animationSpec.frames) {
+      const tileName = tiles;
+      tiles = Array.from(Array(animationSpec.frames).keys())
+        .map(index => `${tileName}-${index + 1}`);
+    }
+
+    return tiles.map(tileName => {
       return tileSet.get(tileName);
     });
   }
