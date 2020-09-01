@@ -15,14 +15,14 @@ export default class TileSet {
       .keys(tileSetSpec.tiles)
       .forEach(tileName => {
         const tileData = tileSetSpec.tiles[tileName];
-        const total = tileData[2] || 1;
+        const total = tileData.position[2] || 1;
         for(let num = 0; num < total; num++) {
-          const tileConfig = {
-            position: new Vector(tileData[0] + num, tileData[1]),
+          const tileSpec = {
+            position: new Vector(tileData.position[0] + num, tileData.position[1]),
             size: this.tileSize,
           }
           const name = tileName + (total > 1 ? `-${num + 1}` : '');
-          tiles.set(name, new Tile(name, tileConfig, tileSetImage));
+          tiles.set(name, new Tile(name, tileSpec, tileSetImage));
         }
       });
     return tiles;
