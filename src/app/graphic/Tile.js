@@ -1,18 +1,20 @@
 export default class Tile {
 
-  constructor(tileData, tileSetImage) {
+  constructor(tileName, tileData, tileSetImage) {
+    this.tileName = tileName;
+    this.position = tileData.position;
     this.size = tileData.size;
-    this.buffers = this._createBuffer(tileData, tileSetImage);
+    this.buffers = this._createBuffer(tileSetImage);
   }
 
-  _createBuffer(tileData, tileSetImage) {
+  _createBuffer(tileSetImage) {
     return [false, true].map(flip => {
       const buffer = document.createElement('canvas');
       buffer.width = this.size;
       buffer.height = this.size;
 
-      const tileX = tileData[0] * this.size;
-      const tileY = tileData[1] * this.size;
+      const tileX = this.position.x * this.size;
+      const tileY = this.position.y * this.size;
       const context = buffer.getContext('2d');
 
       if(flip) {

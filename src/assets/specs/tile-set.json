@@ -6,46 +6,11 @@
     "sea-b": [1, 0],
     "grass-1": [2, 0],
     "grass-2": [3, 0],
-    "sea-1": [4, 0],
-    "sea-2": [5, 0],
-    "sea-3": [6, 0],
-    "sea-4": [7, 0],
-    "sea-5": [8, 0],
-    "sea-6": [9, 0],
-    "sea-7": [10, 0],
-    "sea-8": [11, 0],
-    "sea-foam-r-1": [12, 0],
-    "sea-foam-r-2": [13, 0],
-    "sea-foam-r-3": [14, 0],
-    "sea-foam-r-4": [15, 0],
-    "sea-foam-r-5": [16, 0],
-    "sea-foam-r-6": [17, 0],
-    "sea-foam-r-7": [18, 0],
-    "sea-foam-r-8": [19, 0],
-    "sea-foam-l-1": [20, 0],
-    "sea-foam-l-2": [21, 0],
-    "sea-foam-l-3": [22, 0],
-    "sea-foam-l-4": [23, 0],
-    "sea-foam-l-5": [24, 0],
-    "sea-foam-l-6": [25, 0],
-    "sea-foam-l-7": [26, 0],
-    "sea-foam-l-8": [27, 0],
-    "sea-foam-t-1": [28, 0],
-    "sea-foam-t-2": [29, 0],
-    "sea-foam-t-3": [30, 0],
-    "sea-foam-t-4": [31, 0],
-    "sea-foam-t-5": [32, 0],
-    "sea-foam-t-6": [33, 0],
-    "sea-foam-t-7": [34, 0],
-    "sea-foam-t-8": [35, 0],
-    "sea-foam-b-1": [36, 0],
-    "sea-foam-b-2": [37, 0],
-    "sea-foam-b-3": [38, 0],
-    "sea-foam-b-4": [39, 0],
-    "sea-foam-b-5": [40, 0],
-    "sea-foam-b-6": [41, 0],
-    "sea-foam-b-7": [42, 0],
-    "sea-foam-b-8": [43, 0],
+    "sea": [4, 0, 8],
+    "sea-foam-r": [12, 0, 8],
+    "sea-foam-l": [20, 0, 8],
+    "sea-foam-t": [28, 0, 8],
+    "sea-foam-b": [36, 0, 8],
     "player-idle-1": [0, 1],
     "player-idle-2": [1, 1],
     "tree-01-tl": [0, 3],
@@ -56,19 +21,23 @@
   "animations": {
     "sea": {
       "tiles": ["sea-1", "sea-2", "sea-3", "sea-4", "sea-5", "sea-6", "sea-7", "sea-8"],
-      "interval": 500
+      "interval": 500,
+      "solid": true
     },
     "sea-foam-r": {
       "tiles": ["sea-foam-r-1", "sea-foam-r-2", "sea-foam-r-3", "sea-foam-r-4", "sea-foam-r-5", "sea-foam-r-6", "sea-foam-r-7", "sea-foam-r-8"],
-      "interval": 500
+      "interval": 500,
+      "solid": true
     },
     "sea-foam-l": {
       "tiles": ["sea-foam-l-1", "sea-foam-l-2", "sea-foam-l-3", "sea-foam-l-4", "sea-foam-l-5", "sea-foam-l-6", "sea-foam-l-7", "sea-foam-l-8"],
-      "interval": 500
+      "interval": 500,
+      "solid": true
     },
     "sea-foam-t": {
       "tiles": ["sea-foam-t-1", "sea-foam-t-2", "sea-foam-t-3", "sea-foam-t-4", "sea-foam-t-5", "sea-foam-t-6", "sea-foam-t-7", "sea-foam-t-8"],
-      "interval": 500
+      "interval": 500,
+      "solid": true
     },
     "sea-foam-b": {
       "tiles": ["sea-foam-b-1", "sea-foam-b-2", "sea-foam-b-3", "sea-foam-b-4", "sea-foam-b-5", "sea-foam-b-6", "sea-foam-b-7", "sea-foam-b-8"],

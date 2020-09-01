@@ -1,6 +1,7 @@
 export default class Animation {
 
-  constructor(animationSpec, tileSet) {
+  constructor(animationName, animationSpec, tileSet) {
+    this.animationName = animationName;
     this.interval = animationSpec.interval;
     this.frames = this._createFrames(animationSpec, tileSet);
     this.elapsedTime = 0;

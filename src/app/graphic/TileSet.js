@@ -1,5 +1,6 @@
 import Animation from "./Animation";
 import Tile from "./Tile";
+import { Vector } from "../lib/math";
 
 export default class TileSet {
   constructor(tileSetSpec, tileSetImage) {
@@ -13,11 +14,16 @@ export default class TileSet {
     Object
       .keys(tileSetSpec.tiles)
       .forEach(tileName => {
-        const tileData = Object.assign(
-          { size: this.tileSize },
-          tileSetSpec.tiles[tileName]
-        );
-        tiles.set(tileName, new Tile(tileData, tileSetImage));
+        const tileData = tileSetSpec.tiles[tileName];
+        const total = tileData[2] || 1;
+        for(let num = 0; num < total; num++) {
+          const tileConfig = {
+            position: new Vector(tileData[0] + num, tileData[1]),
+            size: this.tileSize,
+          }
+          const name = tileName + (total > 1 ? `-${num + 1}` : '');
+          tiles.set(name, new Tile(name, tileConfig, tileSetImage));
+        }
       });
     return tiles;
   }
@@ -28,7 +34,7 @@ export default class TileSet {
       .keys(tileSetSpec.animations)
       .forEach(animationName => {
         const animationData = tileSetSpec.animations[animationName];
-        animations.set(animationName, new Animation(animationData, this));
+        animations.set(animationName, new Animation(animationName, animationData, this));
       });
     return animations;
   }
