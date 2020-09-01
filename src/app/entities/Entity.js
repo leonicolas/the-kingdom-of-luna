@@ -27,10 +27,15 @@ export default class Entity {
   }
 
   update(deltaTime, gameContext) {
-    this.traits.forEach(trait => trait.update && trait.update(deltaTime, gameContext));
+    this.traits.forEach(trait => trait.update && trait.update(this, deltaTime, gameContext));
   }
 
   draw(context) {
-    this.currentState.draw(context, this.offset.x, this.offset.y, this.direction < 0);
+    this.currentState.draw(
+      context,
+      this.position.x + this.offset.x,
+      this.position.y + this.offset.y,
+      this.direction < 0
+    );
   }
 }
