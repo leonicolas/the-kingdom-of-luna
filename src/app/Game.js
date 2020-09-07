@@ -26,6 +26,8 @@ export default class Game {
     this.context.player = new Player(playerSpec, this.tileSet, constants.VIEW_PORT_CENTER);
     this.context.map = new GameMap(mapSpec['luna'], this.tileSet);
 
+    this.entities.add(this.context.player);
+
     this._createCompositor();
     this._bindControl();
   }

@@ -3,20 +3,9 @@ export default class Movement {
 
   constructor(entity) {
     entity.velocity = new Vector(0, 0);
-
-    entity.translateX = (value = 0) => {
-      if(value === 0) {
-        return;
-      }
-      entity.velocity.x = value;
-    }
-
-    entity.translateY = (value = 0) => {
-      if(value === 0) {
-        return;
-      }
-      entity.velocity.y = value;
-    }
+    entity.translateX = this._translateX(entity);
+    entity.translateY = this._translateY(entity);
+    entity.getFuturePosition = this._getFuturePosition(entity);
   }
 
   update(entity) {
@@ -29,6 +18,32 @@ export default class Movement {
     if(entity.velocity.y) {
       entity.position.addY(entity.velocity.y);
       entity.velocity.y = 0;
+    }
+  }
+
+  _translateX(entity) {
+    return (value = 0) => {
+      if(value === 0) {
+        return;
+      }
+      entity.velocity.x = value;
+    }
+  }
+
+  _translateY(entity) {
+    return (value = 0) => {
+      if(value === 0) {
+        return;
+      }
+      entity.velocity.y = value;
+    }
+  }
+
+  _getFuturePosition(entity) {
+    return () => {
+      if(entity.velocity.x || entity.velocity.y) {
+        return entity.position.clone().add(entity.velocity);
+      }
     }
   }
 }

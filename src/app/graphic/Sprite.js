@@ -1,11 +1,10 @@
 import { Vector } from "../lib/math";
 
-export default class Entity {
+export default class Sprite {
 
-  constructor(entitySpec, tileSet, offset = new Vector()) {
-    this.position = new Vector(0, 0);
+  constructor(entitySpec, tileSet, position = new Vector()) {
+    this.position = position;
     this.states = this._createStates(entitySpec, tileSet);
-    this.offset = offset.clone();
     this.setState(this.states.keys().next().value);
     this.traits = new Set();
   }
@@ -30,11 +29,11 @@ export default class Entity {
     this.traits.forEach(trait => trait.update && trait.update(this, deltaTime, gameContext));
   }
 
-  draw(context) {
+  draw(context, camera) {
     this.currentState.draw(
       context,
-      this.position.x + this.offset.x,
-      this.position.y + this.offset.y,
+      this.position.x - camera.position.x,
+      this.position.y - camera.position.y,
       this.direction < 0
     );
   }
