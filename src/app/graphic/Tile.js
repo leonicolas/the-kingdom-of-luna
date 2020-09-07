@@ -5,6 +5,21 @@ export default class Tile {
     this.position = tileData.position;
     this.size = tileData.size;
     this.buffers = this._createBuffer(tileSetImage);
+    this.solid = tileData.solid;
+  }
+
+  isSolid() {
+    return this.solid;
+  }
+
+  draw(context, x, y, flip = false) {
+    context.drawImage(this.buffers[flip ? 1 : 0],
+      // Source
+      0, 0, this.size, this.size,
+      // Destination
+      x * this.size, y * this.size,
+      this.size, this.size
+    );
   }
 
   _createBuffer(tileSetImage) {
@@ -29,16 +44,5 @@ export default class Tile {
 
       return buffer;
     });
-  }
-
-
-  draw(context, x, y, flip = false) {
-    context.drawImage(this.buffers[flip ? 1 : 0],
-      // Source
-      0, 0, this.size, this.size,
-      // Destination
-      x * this.size, y * this.size,
-      this.size, this.size
-    );
   }
 }

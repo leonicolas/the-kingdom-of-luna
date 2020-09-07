@@ -75,7 +75,8 @@
     "sea-foam-b": {
       "tiles": "sea-foam-b",
       "interval": 500,
-      "frames": 8
+      "frames": 8,
+      "solid": true
     },
     "player-idle": {
       "tiles": "player-idle",

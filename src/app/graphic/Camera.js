@@ -2,22 +2,18 @@ import { Vector } from "../lib/math";
 
 export default class Camera {
 
-  constructor(viewportSize, position = new Vector(0, 0)) {
+  constructor(viewportSize, subjectPosition = new Vector(), offset = new Vector()) {
     this.viewport = viewportSize;
-    this.position = position;
+    this.subjectPosition = subjectPosition;
+    this.offset = offset;
+    this.lastPosition = subjectPosition.clone();
   }
 
-  translateX(value) {
-    if(value === 0) {
-      return;
-    }
-    this.position.addX(value);
-  }
-
-  translateY(value) {
-    if(value === 0) {
-      return;
-    }
-    this.position.addY(value);
+  get position() {
+    this.lastPosition.set(
+      this.subjectPosition.x + this.offset.x,
+      this.subjectPosition.y + this.offset.y
+    );
+    return this.lastPosition;
   }
 }

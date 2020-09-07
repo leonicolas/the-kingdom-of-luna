@@ -21,6 +21,11 @@ export class Vector {
     this.addY(vector.y);
   }
 
+  set(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
   equals(vector) {
     return vector &&
       vector.x === this.x &&

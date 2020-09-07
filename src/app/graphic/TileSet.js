@@ -17,10 +17,10 @@ export default class TileSet {
         const tileData = tileSetSpec.tiles[tileName];
         const total = tileData.position[2] || 1;
         for(let num = 0; num < total; num++) {
-          const tileSpec = {
+          const tileSpec = Object.assign({}, tileData, {
             position: new Vector(tileData.position[0] + num, tileData.position[1]),
             size: this.tileSize,
-          }
+          });
           const name = tileName + (total > 1 ? `-${num + 1}` : '');
           tiles.set(name, new Tile(name, tileSpec, tileSetImage));
         }

@@ -12,7 +12,6 @@ export default class GameMap {
 
   background() {
     return {
-      update: (deltatime) => this._update(deltatime),
       draw: (context, camera) => this._drawBackground(context, camera)
     };
   }
@@ -23,7 +22,14 @@ export default class GameMap {
     };
   }
 
-  _update() {
+  getTile(x, y) {
+    const objKey = this._getObjectKey(new Vector(x, y));
+    const object = [this.backgroundObjects, this.foregroundObjects]
+      .reduce((selectedObject, objects) =>
+        objects.has(objKey) ? objects.get(objKey) : selectedObject,
+        undefined
+    );
+    return object || this.terrain.get(x, y);
   }
 
   _drawForeground(context, camera) {
@@ -31,9 +37,9 @@ export default class GameMap {
       const fgTiles = []
 
       // Add foreground object tile.
-      const objectKey = this._getObjectIndex(mapPosition);
-      if(this.foregroundObjects.has(objectKey)) {
-        fgTiles.push(this.foregroundObjects.get(objectKey));
+      const objKey = this._getObjectKey(mapPosition);
+      if(this.foregroundObjects.has(objKey)) {
+        fgTiles.push(this.foregroundObjects.get(objKey));
       }
 
       return fgTiles;
@@ -52,9 +58,9 @@ export default class GameMap {
         );
 
         // Add background object tile.
-        const objectKey = this._getObjectIndex(mapPosition);
-        if(this.backgroundObjects.has(objectKey)) {
-          bgTiles.push(this.backgroundObjects.get(objectKey));
+        const objKey = this._getObjectKey(mapPosition);
+        if(this.backgroundObjects.has(objKey)) {
+          bgTiles.push(this.backgroundObjects.get(objKey));
         }
 
         return bgTiles;
@@ -78,8 +84,8 @@ export default class GameMap {
   _indexObjects(objectsList, tileSet) {
     return objectsList.reduce((map, tileData) => {
       const [tileName, x, y] = tileData;
-      const objIndex = this._getObjectIndex(new Vector(x, y));
-      map.set(objIndex, tileSet.get(tileName));
+      const objKey = this._getObjectKey(new Vector(x, y));
+      map.set(objKey, tileSet.get(tileName));
       return map;
     }, new Map());
   }
@@ -103,7 +109,7 @@ export default class GameMap {
     }, new Matrix());
   }
 
-  _getObjectIndex(position) {
+  _getObjectKey(position) {
     return `${position.x}-${position.y}`;
   }
 }

@@ -7,6 +7,8 @@ import GameMap from './graphic/GameMap';
 import Camera from './graphic/Camera';
 import Player from './entities/Player';
 import Compositor from './graphic/Compositor';
+import CollisionNotifier from './graphic/CollisionNotifier';
+import { Vector } from './lib/math';
 
 export default class Game {
 
@@ -21,15 +23,18 @@ export default class Game {
     const [tileSetImage, tileSetSpec, mapSpec, playerSpec] = await this._loadDependencies();
 
     this.tileSet = new TileSet(tileSetSpec, tileSetImage);
-    this.camera = new Camera(constants.VIEW_PORT_SIZE);
-
     this.context.player = new Player(playerSpec, this.tileSet, constants.VIEW_PORT_CENTER);
     this.context.map = new GameMap(mapSpec['luna'], this.tileSet);
+    this.camera = new Camera(constants.VIEW_PORT_SIZE, this.context.player.position,
+      new Vector(-constants.VIEW_PORT_CENTER.x, -constants.VIEW_PORT_CENTER.y)
+    );
 
     this.entities.add(this.context.player);
 
+    this.collisionNotifier = new CollisionNotifier(this.entities, this.context.map);
+
     this._createCompositor();
-    this._bindControl();
+    this.control.bind(this.context.player);
   }
 
   start() {
@@ -53,13 +58,9 @@ export default class Game {
 
   _createCompositor() {
     this.compositor = new Compositor();
+    this.compositor.addObject(this.collisionNotifier);
     this.compositor.addLayer(this.context.map.background());
     this.compositor.addObject(this.context.player);
     this.compositor.addLayer(this.context.map.foreground());
-  }
-
-  _bindControl() {
-    this.control.bind(this.context.player);
-    this.control.bind(this.camera);
   }
 }

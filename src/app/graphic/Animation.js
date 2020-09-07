@@ -6,6 +6,23 @@ export default class Animation {
     this.frames = this._createFrames(animationSpec, tileSet);
     this.elapsedTime = 0;
     this.index = 0;
+    this.solid = animationSpec.solid;
+  }
+
+  isSolid() {
+    return this.solid;
+  }
+
+  update(deltaTime) {
+    this.elapsedTime += deltaTime * 1000;
+    if(this.elapsedTime > this.interval) {
+      this.index = ++this.index % this.frames.length;
+      this.elapsedTime = 0;
+    }
+  }
+
+  draw(context, x, y, flip = false) {
+    this.frames[this.index].draw(context, x, y, flip);
   }
 
   _createFrames(animationSpec, tileSet) {
@@ -19,17 +36,5 @@ export default class Animation {
     return tiles.map(tileName => {
       return tileSet.get(tileName);
     });
-  }
-
-  update(deltaTime) {
-    this.elapsedTime += deltaTime * 1000;
-    if(this.elapsedTime > this.interval) {
-      this.index = ++this.index % this.frames.length;
-      this.elapsedTime = 0;
-    }
-  }
-
-  draw(context, x, y, flip = false) {
-    this.frames[this.index].draw(context, x, y, flip);
   }
 }

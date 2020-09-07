@@ -5,13 +5,11 @@ export default class Movement {
     entity.velocity = new Vector(0, 0);
     entity.translateX = this._translateX(entity);
     entity.translateY = this._translateY(entity);
-    entity.getFuturePosition = this._getFuturePosition(entity);
   }
 
   update(entity) {
     if(entity.velocity.x) {
       entity.position.addX(entity.velocity.x);
-      entity.direction = entity.velocity.x > 0 ? 1 : -1;
       entity.velocity.x = 0;
     }
 
@@ -26,6 +24,7 @@ export default class Movement {
       if(value === 0) {
         return;
       }
+      entity.direction = value > 0 ? 1 : -1;
       entity.velocity.x = value;
     }
   }
@@ -36,14 +35,6 @@ export default class Movement {
         return;
       }
       entity.velocity.y = value;
-    }
-  }
-
-  _getFuturePosition(entity) {
-    return () => {
-      if(entity.velocity.x || entity.velocity.y) {
-        return entity.position.clone().add(entity.velocity);
-      }
     }
   }
 }
