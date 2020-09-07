@@ -7,10 +7,12 @@ export default class CollisionNotifier {
 
   update() {
     this.entities.forEach(subject => {
-      const futureX = subject.position.x + subject.velocity.x;
-      const futureY = subject.position.y + subject.velocity.y;
-      const tile = this.gamemap.getTile(futureX, futureY);
+      if(!subject.collided) {
+        return;
+      }
 
+      const position = subject.getFuturePosition();
+      const tile = this.gamemap.getTile(position.x, position.y);
       if(tile && tile.isSolid()) {
         subject.collided(tile);
         return;

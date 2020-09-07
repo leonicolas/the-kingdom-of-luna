@@ -1,10 +1,12 @@
 import { Vector } from "../lib/math";
+
 export default class Movement {
 
   constructor(entity) {
     entity.velocity = new Vector(0, 0);
     entity.translateX = this._translateX(entity);
     entity.translateY = this._translateY(entity);
+    entity.getFuturePosition = this._futurePosition(entity);
   }
 
   update(entity) {
@@ -35,6 +37,15 @@ export default class Movement {
         return;
       }
       entity.velocity.y = value;
+    }
+  }
+
+  _futurePosition(entity) {
+    return () => {
+      return new Vector(
+        entity.position.x + entity.velocity.x,
+        entity.position.y + entity.velocity.y
+      );
     }
   }
 }

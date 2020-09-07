@@ -1,12 +1,13 @@
 export default class Collition {
 
-  constructor(entity) {
-    entity.collided = this._collided(entity);
+  constructor(entity, collisionCallback) {
+    this.collisionCallback = collisionCallback;
+    entity.collided = this._collided();
   }
 
-  _collided(entity) {
+  _collided() {
     return (candidate) => {
-      entity.velocity.set(0, 0);
+      this.collisionCallback(candidate);
     }
   }
 }

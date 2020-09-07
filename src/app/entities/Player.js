@@ -9,6 +9,12 @@ export default class Player extends Sprite {
   constructor(entitySpec, tileSet, offset = new Vector()) {
     super(entitySpec, tileSet, offset);
     this.addTrait(new Movement(this));
-    this.addTrait(new Collision(this));
+    this.addTrait(new Collision(this, this._createCollideCallback()));
+  }
+
+  _createCollideCallback() {
+    return () => {
+      this.velocity.set(0, 0);
+    }
   }
 }
