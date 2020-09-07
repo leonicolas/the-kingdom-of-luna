@@ -14,6 +14,15 @@ This is the first glimpse of the game:
 
 https://www.youtube.com/watch?v=be9ax1X3o0A
 
+## Implemented features
+
+* Draw tiles
+* Draw animations
+* Draw player
+* Draw multiple layers
+* Draw map from specification JSON
+* Move player using keyboard
+* Terrain and Sprites collisions
 
 ## How to run the game
 
@@ -22,3 +31,9 @@ The first step is to clone the repository or download the source code to your co
 To install the game dependencies you must open the computer terminal and run the command ```npm install``` from the game directory.
 
 To run the game you must use the command ```npm start```.
+
+## Sprite editor
+
+To create the game sprites I'm using the [LibreSprite](https://github.com/LibreSprite/LibreSprite), an excellent open source fork of the Aseprite sprite editor.
+
+![game screenshot](resources/libre-sprite.png)
