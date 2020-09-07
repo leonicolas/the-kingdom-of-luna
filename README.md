@@ -16,10 +16,9 @@ https://www.youtube.com/watch?v=be9ax1X3o0A
 
 ## Implemented features
 
-* Draw tiles
-* Draw animations
+* Draw tiles and tiles animations
 * Draw player
-* Draw multiple layers
+* Draw multiple layers (terrain, background and foreground)
 * Draw map from specification JSON
 * Move player using keyboard
 * Terrain and Sprites collisions
