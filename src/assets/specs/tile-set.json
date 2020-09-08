@@ -45,6 +45,28 @@
     "tree-01-br": {
       "position": [1, 4],
       "solid": true
+    },
+    "mountain-01-tl": {
+      "position": [2, 3]
+    },
+    "mountain-01-tr": {
+      "position": [3, 3]
+    },
+    "mountain-01-bl": {
+      "position": [2, 4],
+      "solid": true
+    },
+    "mountain-01-br": {
+      "position": [3, 4],
+      "solid": true
+    },
+    "mountain-01-tbl": {
+      "position": [4, 4],
+      "solid": true
+    },
+    "mountain-01-tbr": {
+      "position": [5, 4],
+      "solid": true
     }
   },
   "animations": {
