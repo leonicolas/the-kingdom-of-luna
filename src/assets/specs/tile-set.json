@@ -8,12 +8,14 @@
     "sea-b": {
       "position": [1, 0]
     },
+
     "grass-1": {
       "position": [2, 0]
     },
     "grass-2": {
       "position": [3, 0]
     },
+
     "sea": {
       "position": [4, 0, 8]
     },
@@ -29,9 +31,11 @@
     "sea-foam-b": {
       "position": [36, 0, 8]
     },
+
     "player-idle": {
       "position": [0, 1, 2]
     },
+
     "tree-01-tl": {
       "position": [0, 3]
     },
@@ -46,6 +50,26 @@
       "position": [1, 4],
       "solid": true
     },
+
+    "window-01-tc": {
+      "position": [0, 5]
+    },
+    "window-01-t": {
+      "position": [1, 5]
+    },
+    "window-01-bc": {
+      "position": [2, 5]
+    },
+    "window-01-b": {
+      "position": [3, 5]
+    },
+    "window-01-i": {
+      "position": [4, 5]
+    },
+    "window-01-s": {
+      "position": [5, 5]
+    },
+
     "mountain-01-tl": {
       "position": [2, 3]
     },
