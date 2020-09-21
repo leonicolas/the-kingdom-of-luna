@@ -9,6 +9,7 @@ import Player from './entities/Player';
 import Compositor from './graphic/Compositor';
 import CollisionLayer from './layers/CollisionLayer';
 import { Vector } from './lib/math';
+import WindowLayer from './layers/WindowLayer';
 
 export default class Game {
 
@@ -28,6 +29,7 @@ export default class Game {
     this.camera = new Camera(constants.VIEW_PORT_SIZE, this.context.player.position,
       new Vector(-constants.VIEW_PORT_CENTER.x, -constants.VIEW_PORT_CENTER.y)
     );
+    this.inventary = new WindowLayer(null, this.tileSet);
 
     this.entities.add(this.context.player);
 
@@ -35,6 +37,7 @@ export default class Game {
 
     this._createCompositor();
     this.control.bind(this.context.player);
+    this.control.bind(this.inventary);
   }
 
   start() {
@@ -62,5 +65,6 @@ export default class Game {
     this.compositor.addLayer(this.context.map.background());
     this.compositor.addObject(this.context.player);
     this.compositor.addLayer(this.context.map.foreground());
+    this.compositor.addLayer(this.inventary);
   }
 }

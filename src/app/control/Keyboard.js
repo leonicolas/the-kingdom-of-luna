@@ -9,6 +9,7 @@ export const Keys = {
   ArrowDown: 'ArrowDown',
   ArrowLeft: 'ArrowLeft',
   ArrowRight: 'ArrowRight',
+  KeyI: 'KeyI'
 };
 
 export default class Keyboard {

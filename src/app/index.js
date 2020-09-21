@@ -14,10 +14,11 @@ async function init(canvas) {
   gamepad.startListeningTo(window);
 
   const keyMap = new Map();
-  keyMap.set(Keys.ArrowLeft, (entity, keyState) => entity.translateX(-keyState));
-  keyMap.set(Keys.ArrowRight, (entity, keyState) => entity.translateX(keyState));
-  keyMap.set(Keys.ArrowUp, (entity, keyState) => entity.translateY(-keyState));
-  keyMap.set(Keys.ArrowDown, (entity, keyState) => entity.translateY(keyState));
+  keyMap.set(Keys.ArrowLeft, (entity, keyState) => entity.translateX && entity.translateX(-keyState));
+  keyMap.set(Keys.ArrowRight, (entity, keyState) => entity.translateX && entity.translateX(keyState));
+  keyMap.set(Keys.ArrowUp, (entity, keyState) => entity.translateY && entity.translateY(-keyState));
+  keyMap.set(Keys.ArrowDown, (entity, keyState) => entity.translateY && entity.translateY(keyState));
+  keyMap.set(Keys.KeyI, (entity, keyState) => keyState && entity.toggle && entity.toggle(keyState));
 
   const keyboard = new Keyboard(keyMap);
   const game = new Game(context, keyboard);
