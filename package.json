@@ -12,10 +12,10 @@
   "license": "ISC",
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
-    "copy-webpack-plugin": "^6.0.3",
-    "eslint": "^7.7.0",
-    "html-webpack-plugin": "^4.3.0",
-    "webpack": "^4.44.1",
+    "copy-webpack-plugin": "^6.1.1",
+    "eslint": "^7.9.0",
+    "html-webpack-plugin": "^4.4.1",
+    "webpack": "^4.44.2",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
   }
