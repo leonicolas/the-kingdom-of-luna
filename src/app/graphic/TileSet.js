@@ -9,6 +9,18 @@ export default class TileSet {
     this.animations = this._loadAnimations(tileSetSpec);
   }
 
+  update(deltaTime) {
+    this.animations.forEach(animation => {
+      animation.update(deltaTime);
+    });
+  }
+
+  get(tileName) {
+    return (this.animations && this.animations.has(tileName))
+      ? this.animations.get(tileName)
+      : this.tileSet.get(tileName);
+  }
+
   _loadTileSet(tileSetSpec, tileSetImage) {
     const tiles = new Map();
     Object
@@ -37,17 +49,5 @@ export default class TileSet {
         animations.set(animationName, new Animation(animationName, animationData, this));
       });
     return animations;
-  }
-
-  update(deltaTime) {
-    this.animations.forEach(animation => {
-      animation.update(deltaTime);
-    });
-  }
-
-  get(tileName) {
-    return (this.animations && this.animations.has(tileName))
-      ? this.animations.get(tileName)
-      : this.tileSet.get(tileName);
   }
 }
