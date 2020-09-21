@@ -7,7 +7,7 @@ import GameMap from './graphic/GameMap';
 import Camera from './graphic/Camera';
 import Player from './entities/Player';
 import Compositor from './graphic/Compositor';
-import CollisionNotifier from './graphic/CollisionNotifier';
+import CollisionLayer from './layers/CollisionLayer';
 import { Vector } from './lib/math';
 
 export default class Game {
@@ -31,7 +31,7 @@ export default class Game {
 
     this.entities.add(this.context.player);
 
-    this.collisionNotifier = new CollisionNotifier(this.entities, this.context.map);
+    this.collisionLayer = new CollisionLayer(this.entities, this.context.map);
 
     this._createCompositor();
     this.control.bind(this.context.player);
@@ -58,7 +58,7 @@ export default class Game {
 
   _createCompositor() {
     this.compositor = new Compositor();
-    this.compositor.addObject(this.collisionNotifier);
+    this.compositor.addLayer(this.collisionLayer);
     this.compositor.addLayer(this.context.map.background());
     this.compositor.addObject(this.context.player);
     this.compositor.addLayer(this.context.map.foreground());
