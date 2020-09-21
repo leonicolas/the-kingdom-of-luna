@@ -1,3 +1,5 @@
+import { castArray } from "../lib/utils";
+
 const PRESSED = 1;
 const RELEASED = 0;
 
@@ -18,10 +20,12 @@ export default class Keyboard {
   }
 
   bind(entity) {
-    this.keyMap.forEach((callback, keyCode) => {
-      this.addKeyListener(keyCode, keyState => {
-        callback(entity, keyState);
-      })
+    this.keyMap.forEach((callback, keyCodes) => {
+      castArray(keyCodes).forEach(keyCode =>
+        this.addKeyListener(keyCode, keyState => {
+          callback(entity, keyState);
+        })
+      )
     });
   }
 
